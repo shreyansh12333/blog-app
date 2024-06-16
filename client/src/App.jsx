@@ -1,3 +1,4 @@
+import FooterComp from "./Components/FooterComp";
 import Header from "./Components/Header";
 import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
@@ -19,6 +20,7 @@ function App() {
         <Route path="/sign-in" element={<Signin />}></Route>
         <Route path="/projects" element={<Projects />}></Route>
       </Routes>
+      <FooterComp />
     </BrowserRouter>
   );
 }
