@@ -2,21 +2,28 @@ import React, { useState } from "react";
 import { AiFillGoogleCircle } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import { Alert, Spinner } from "flowbite-react";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  signInFailure,
+  signInStart,
+  signInSuccess,
+} from "../store/slices/userslice";
 
 export default function Signin() {
   const [formData, setFormData] = useState({});
-  const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null);
+  const { error, loading } = useSelector((state) => state.userSlice);
+
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleChange = (e) => {
     const newFormData = { ...formData, [e.target.id]: e.target.value };
     setFormData(newFormData);
   };
   const handleSubmit = async (e) => {
+    console.log("hello");
     e.preventDefault();
     try {
-      setErrorMessage(null);
-      setLoading(true);
+      dispatch(signInStart());
       const res = await fetch("/api/auth/signin", {
         method: "POST",
         headers: {
@@ -26,15 +33,16 @@ export default function Signin() {
       });
       const data = await res.json();
       console.log(data);
+
       if (data.success === false) {
-        setErrorMessage(data.message);
-        setLoading(false);
+        dispatch(signInFailure(data));
         return;
       }
-      setLoading(false);
+      dispatch(signInSuccess(data));
+
       navigate("/");
     } catch (error) {
-      setErrorMessage(error);
+      signInFailure(dispatch(error));
       return;
     }
   };
@@ -98,9 +106,9 @@ export default function Signin() {
                 <Link>Sign in</Link>
               </span>
             </p>
-            {errorMessage && (
+            {error && (
               <Alert className="mt-5" color="failure">
-                {errorMessage}
+                {error}
               </Alert>
             )}
           </form>
