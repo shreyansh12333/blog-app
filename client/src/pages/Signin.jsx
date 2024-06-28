@@ -8,10 +8,12 @@ import {
   signInStart,
   signInSuccess,
 } from "../store/slices/userslice";
+import OAuth from "../Components/OAuth";
 
 export default function Signin() {
   const [formData, setFormData] = useState({});
   const { error, loading } = useSelector((state) => state.userSlice);
+  console.log(loading);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -38,11 +40,12 @@ export default function Signin() {
         dispatch(signInFailure(data));
         return;
       }
+      console.log("mango");
       dispatch(signInSuccess(data));
 
       navigate("/");
     } catch (error) {
-      signInFailure(dispatch(error));
+      dispatch(signInFailure(error));
       return;
     }
   };
@@ -93,17 +96,14 @@ export default function Signin() {
                   <span className="pl-3">Loading...</span>
                 </>
               ) : (
-                "SignUp"
+                "SignIn"
               )}
             </button>
-            <button className="border-red-500 p-2 border-2 rounded-lg flex items-center justify-center w-96">
-              <AiFillGoogleCircle className="w-7 h-7 rounded-full" />
-              Continue with google
-            </button>
+            <OAuth />
             <p>
               Have an account?{" "}
               <span className="text-blue-500">
-                <Link>Sign in</Link>
+                <Link to="/sign-up">Sign Up</Link>
               </span>
             </p>
             {error && (

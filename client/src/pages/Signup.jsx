@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { AiFillGoogleCircle } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { Alert, Spinner } from "flowbite-react";
+import OAuth from "../Components/OAuth";
 
 export default function Signup() {
   const [formData, setFormData] = useState({});
@@ -101,10 +102,8 @@ export default function Signup() {
                 "SignUp"
               )}
             </button>
-            <button className="border-red-500 p-2 border-2 rounded-lg flex items-center justify-center w-96">
-              <AiFillGoogleCircle className="w-7 h-7 rounded-full" />
-              Continue with google
-            </button>
+            <OAuth />
+
             <p>
               Have an account?{" "}
               <span className="text-blue-500">
