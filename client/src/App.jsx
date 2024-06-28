@@ -1,5 +1,6 @@
 import FooterComp from "./Components/FooterComp";
 import Header from "./Components/Header";
+import PrivateRoute from "./Components/PrivateROute";
 import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
 import Projects from "./pages/Projects";
@@ -15,7 +16,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="/about" element={<About />}></Route>
-        <Route path="/dashboard" element={<Dashboard />}></Route>
+        <Route element={<PrivateRoute />}>
+          <Route path="/dashboard" element={<Dashboard />}></Route>
+        </Route>
         <Route path="/sign-up" element={<Signup />}></Route>
         <Route path="/sign-in" element={<Signin />}></Route>
         <Route path="/projects" element={<Projects />}></Route>

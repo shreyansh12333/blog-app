@@ -10,12 +10,16 @@ import {
 } from "flowbite-react";
 import { Link, useLocation } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
-import { FaMoon } from "react-icons/fa";
+import { FaMoon, FaSun } from "react-icons/fa";
 import { useSelector } from "react-redux";
+import { toggleTheme } from "../store/theme/themeSlice";
+import { useDispatch } from "react-redux";
 
 export default function Header() {
   const location = useLocation().pathname;
   const { currentUser } = useSelector((state) => state.userSlice);
+  const dispatch = useDispatch();
+  const { theme } = useSelector((state) => state.themeSlice);
   // console.log(currentUser.profilePicture);
 
   return (
@@ -52,8 +56,13 @@ export default function Header() {
         </Navbar.Link>
       </Navbar.Collapse>
       <div className="flex gap-2 md:order-2">
-        <Button className="w-12 h-12 hidden sm:inline" color="gray" pill>
-          <FaMoon />
+        <Button
+          className="w-12 h-12 hidden sm:inline"
+          color="gray"
+          pill
+          onClick={() => dispatch(toggleTheme())}
+        >
+          {theme === "light" ? <FaSun /> : <FaMoon />}
         </Button>
         {currentUser ? (
           <Dropdown
