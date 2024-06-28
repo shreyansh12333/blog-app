@@ -1,6 +1,8 @@
 import React from "react";
 import {
+  Avatar,
   Button,
+  Dropdown,
   Navbar,
   NavbarLink,
   NavbarToggle,
@@ -9,9 +11,13 @@ import {
 import { Link, useLocation } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaMoon } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 export default function Header() {
   const location = useLocation().pathname;
+  const { currentUser } = useSelector((state) => state.userSlice);
+  // console.log(currentUser.profilePicture);
+
   return (
     <Navbar className="border-b-2">
       <Link
@@ -49,11 +55,33 @@ export default function Header() {
         <Button className="w-12 h-12 hidden sm:inline" color="gray" pill>
           <FaMoon />
         </Button>
-        <Link to="/sign-in">
-          <Button gradientDuoTone="purpleToBlue" outline pill>
-            Sign In
-          </Button>
-        </Link>
+        {currentUser ? (
+          <Dropdown
+            arrowIcon={false}
+            inline
+            label={
+              <Avatar alt="user" img={currentUser.profilePicture} rounded />
+            }
+          >
+            <Dropdown.Header>
+              <span className="block text-sm">@{currentUser.username}</span>
+              <span className="block text-sm font-medium truncate">
+                {currentUser.email}
+              </span>
+            </Dropdown.Header>
+            <Link to={"/dashboard?tab=profile"}>
+              <Dropdown.Item>Profile</Dropdown.Item>
+            </Link>
+            <Dropdown.Divider />
+            <Dropdown.Item>Sign out</Dropdown.Item>
+          </Dropdown>
+        ) : (
+          <Link to="/sign-in">
+            <Button gradientDuoTone="purpleToBlue" outline pill>
+              Sign In
+            </Button>
+          </Link>
+        )}
         <NavbarToggle />
       </div>
     </Navbar>

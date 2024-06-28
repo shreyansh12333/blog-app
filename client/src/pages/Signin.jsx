@@ -22,7 +22,6 @@ export default function Signin() {
     setFormData(newFormData);
   };
   const handleSubmit = async (e) => {
-    console.log("hello");
     e.preventDefault();
     try {
       dispatch(signInStart());
@@ -34,7 +33,6 @@ export default function Signin() {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      console.log(data);
 
       if (data.success === false) {
         dispatch(signInFailure(data));
