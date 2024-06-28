@@ -1,6 +1,6 @@
 import FooterComp from "./Components/FooterComp";
 import Header from "./Components/Header";
-import PrivateRoute from "./Components/PrivateROute";
+import PrivateRoute from "./Components/privateRoute";
 import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
 import Projects from "./pages/Projects";
